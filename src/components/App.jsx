@@ -38,8 +38,10 @@ const Contact = ({ contact: { name, number } }) => {
 const ContactForm = ({ onSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
+    const form = event.currentTarget;
     const { name, number } = event.target.elements;
     onSubmit(name.value, number.value);
+    form.reset();
   };
   return (
     <Form onSubmit={handleSubmit}>
@@ -84,7 +86,7 @@ export class App extends Component {
   };
 
   render() {
-    const { contacts, name, number } = this.state;
+    const { contacts } = this.state;
     return (
       <Layout>
         <ContactForm onSubmit={this.addContact} />
