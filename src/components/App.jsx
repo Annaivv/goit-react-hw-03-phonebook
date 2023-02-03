@@ -17,7 +17,7 @@ const ContactList = ({ items }) => {
       <ul>
         {items.map((item, idx) => (
           <li key={idx}>
-            <span>{item}</span>
+            <Contact contact={item} />
           </li>
         ))}
       </ul>
@@ -25,10 +25,21 @@ const ContactList = ({ items }) => {
   );
 };
 
+const Contact = ({ contact: { name, number } }) => {
+  return (
+    <div>
+      <span>{name}</span>
+      <span>: </span>
+      <span>{number}</span>
+    </div>
+  );
+};
+
 const ContactForm = ({ onSubmit }) => {
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmit(event.target.elements.name.value);
+    const { name, number } = event.target.elements;
+    onSubmit(name.value, number.value);
   };
   return (
     <Form onSubmit={handleSubmit}>
@@ -42,6 +53,16 @@ const ContactForm = ({ onSubmit }) => {
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         ></Input>
+        <Field>
+          Number
+          <Input
+            type="tel"
+            name="number"
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+          ></Input>
+        </Field>
       </Field>
 
       <Button type="submit">Add contact</Button>
@@ -53,19 +74,17 @@ export class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
-  addContact = text => {
-    console.log(text);
+  addContact = (name, number) => {
     this.setState(prevState => ({
-      contacts: [...prevState.contacts, text],
-      name: text,
-      id: nanoid(),
+      contacts: [...prevState.contacts, { id: nanoid(), name, number }],
     }));
   };
 
   render() {
-    const { contacts, name } = this.state;
+    const { contacts, name, number } = this.state;
     return (
       <Layout>
         <ContactForm onSubmit={this.addContact} />
