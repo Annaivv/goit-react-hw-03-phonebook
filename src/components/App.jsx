@@ -22,6 +22,13 @@ export class App extends Component {
   };
 
   addContact = (name, number) => {
+    const { contacts } = this.state;
+    for (const contact of contacts) {
+      if (contact.name === name) {
+        alert(`${name} is already in contacts.`);
+        return contacts;
+      }
+    }
     this.setState(prevState => ({
       contacts: [...prevState.contacts, { id: nanoid(), name, number }],
     }));
