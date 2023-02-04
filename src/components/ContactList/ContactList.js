@@ -1,15 +1,16 @@
 import Contact from 'components/Contact/Contact';
+import { ItemsList, ListItem } from './ContactList.styled';
 
 const ContactList = ({ items, onDelete }) => {
   return (
     <div>
-      <ul>
+      <ItemsList>
         {items.map((item, idx) => (
-          <li key={idx}>
+          <ListItem key={idx}>
             <Contact contact={item} onDelete={onDelete} />
-          </li>
+          </ListItem>
         ))}
-      </ul>
+      </ItemsList>
     </div>
   );
 };
