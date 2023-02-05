@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Form, Field, Input, Button } from './ContactForm.styled';
 
 const ContactForm = ({ onSubmit }) => {
@@ -37,3 +38,7 @@ const ContactForm = ({ onSubmit }) => {
 };
 
 export default ContactForm;
+
+ContactForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

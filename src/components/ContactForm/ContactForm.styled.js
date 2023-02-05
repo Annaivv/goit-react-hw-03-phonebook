@@ -26,7 +26,10 @@ export const Button = styled.button`
   cursor: pointer;
   background-color: #fff;
   border-radius: 4px;
-  &.active {
+  &:active {
+    background-color: #43b0f1;
+  }
+  &:hover {
     background-color: #43b0f1;
   }
 `;
