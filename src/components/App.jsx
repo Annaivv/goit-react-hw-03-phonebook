@@ -4,7 +4,7 @@ import { nanoid } from 'nanoid';
 import { Layout } from './Layout';
 import { GlobalStyle } from './GlobalStyle';
 
-import ContactForm from './ContactForm/ContactForm';
+import { ContactForm } from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 
@@ -23,8 +23,12 @@ export class App extends Component {
 
   addContact = (name, number) => {
     const { contacts } = this.state;
+
     for (const contact of contacts) {
-      if (contact.name.toLowerCase() === name) {
+      const normalizeStateName = contact.name.toLowerCase();
+      const normalizedReceivedName = name.toLowerCase();
+      // console.log(normalizedName);
+      if (normalizeStateName === normalizedReceivedName) {
         alert(`${name} is already in contacts.`);
         return contacts;
       }
