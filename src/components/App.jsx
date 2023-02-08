@@ -21,13 +21,27 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts.length !== this.state.contacts.length) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
   addContact = (name, number) => {
     const { contacts } = this.state;
 
     for (const contact of contacts) {
       const normalizeStateName = contact.name.toLowerCase();
       const normalizedReceivedName = name.toLowerCase();
-      // console.log(normalizedName);
+
       if (normalizeStateName === normalizedReceivedName) {
         alert(`${name} is already in contacts.`);
         return contacts;
